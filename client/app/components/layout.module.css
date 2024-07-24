@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  height: 100vh;
+  background-color: var(--color-background);
+}
+
+.sidebarContainer {
+  width: 250px;
+  flex-shrink: 0;
+  background-color: var(--color-primary);
+}
+
+.mainContainer {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background);
+}
+
+.header {
+  flex-shrink: 0;
+  background-color: var(--color-primary-dark);
+  color: var(--color-background);
+  padding: 1rem;
+}
+
+.footer {
+  flex-shrink: 0;
+  background-color: var(--color-primary-dark);
+  color: var(--color-background);
+  padding: 1rem;
+}
+
+.contentContainer {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: var(--color-background);
+}

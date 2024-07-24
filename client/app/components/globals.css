@@ -1,0 +1,40 @@
+:root {
+  /* Primary Colors */
+  --color-primary: #6371b0;      
+  --color-primary-dark: #4c5a95; 
+  --color-primary-light: #7982c1;
+
+  /* Secondary Colors */
+  --color-secondary: #a4aed8;    
+  --color-secondary-dark: #7f8dbf; 
+  --color-secondary-light: #c1cae3; 
+
+  /* Text and Background Colors */
+  --color-text: #0e0f14;           
+  --color-background: #f3eded;   
+
+  /* Accent Colors */
+  --color-accent: #6e80ca;       
+  --color-accent-dark: #5765b2;  
+  --color-accent-light: #8497d6; 
+
+  /* Additional Colors */
+  --color-gray: #757575;         
+  --color-border: #e0e0e0;       
+
+  /* Success and Error Colors */
+  --color-success: #4caf50;      
+  --color-error: #f44336;        
+}
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-background);
+}

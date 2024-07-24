@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  background-color: var(--color-secondary);
+  border-radius: 5px;
+  padding: 10px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h3 {
+  margin: 0; 
+}
+
+.header p {
+  margin: 5px 0; 
+}
+
+.button button {
+  background-color: var(--color-primary); 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button button:hover {
+  background-color: var(--color-primary-light); 
+}
+
+.cardContainer {
+  margin-top: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}

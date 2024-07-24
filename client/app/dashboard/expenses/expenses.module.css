@@ -1,0 +1,35 @@
+.container{
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  background-color: var(--color-secondary);
+  border-radius: 5px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+.header h3 {
+  margin: 0; 
+}
+
+.header p {
+  margin: 5px 0; 
+}
+
+.button button {
+  background-color: var(--color-primary); 
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button button:hover {
+  background-color: var(--color-primary-light); 
+}

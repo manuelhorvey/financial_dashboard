@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20px;
+}
+
+.paper {
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.submitButton {
+  margin-top: 1.5rem;
+  align-self: center;
+}
+
+.header {
+  text-align: center;
+}
+
+.header h2 {
+  margin-bottom: 0.5rem;
+}
+
+.header p {
+  margin: 0;
+  color: #666666;
+}

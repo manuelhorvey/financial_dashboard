@@ -1,0 +1,37 @@
+.container {
+  background-color: var(--color-primary-dark);
+  color: #fff;
+  padding: 2rem;
+  text-align: center;
+}
+
+.topSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.socialMedia a {
+  color: #fff;
+  margin: 0 0.5rem;
+  transition: color 0.3s;
+}
+
+.socialMedia a:hover {
+  color: var(--color-accent);
+}
+
+.bottomSection {
+  font-size: 0.875rem;
+}
+
+.bottomSection {
+  margin: 0.5rem 0;
+}

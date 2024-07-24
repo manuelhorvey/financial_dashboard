@@ -1,0 +1,133 @@
+.container {
+  width: 250px; 
+  background-color: var(--color-primary);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  overflow-y: auto;
+  top: 0;
+  left: 0;
+  border-radius: 5px;
+}
+
+
+.userImage {
+  margin-right: 0.5rem;
+  border-radius:50%;
+}
+
+.user {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+  margin-left: 3rem;
+  text-align: center;
+}
+
+.category {
+  margin: 1rem 0;
+}
+
+.expensesSummary {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--color-primary-dark);
+  text-align: center;
+  border-radius: 5px;
+}
+
+.expensesSummary h2 {
+  margin-bottom: 10px;
+}
+
+.expensesSummary p {
+  margin: 5px 0;
+}
+
+
+.catTitle {
+  padding: 0.5rem 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-primary-dark);
+}
+
+
+.employeesSummary {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--color-primary-dark);
+  text-align: center;
+  border-radius: 5px;
+}
+
+.employeesSummary h2 {
+  margin-bottom: 10px;
+}
+
+.employeesSummary p {
+  margin: 5px 0;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.clientsSummary {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: var(--color-primary-dark);
+  text-align: center;
+  border-radius: 5px;
+}
+
+.clientsSummary h2 {
+  margin-bottom: 10px;
+}
+
+.clientsSummary p {
+  margin: 5px 0;
+}
+
+.listItem {
+  margin: 0.5rem 0;
+}
+
+.listItem a {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  transition: background-color 0.3s;
+}
+
+.listItem a:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.logout {
+  margin-top: auto;
+  padding: 1rem;
+  background-color: var(--color-secondary);
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout:hover {
+  background-color: var(--color-secondary-dark);
+}
+
+.logout svg {
+  margin-right: 0.5rem;
+}

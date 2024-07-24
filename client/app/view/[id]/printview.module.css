@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; 
+}
+
+.tableContainer {
+  width: 100%; 
+  max-width: 800px; 
+}
+
+.alignVertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.typographyLabel {
+  display: flex;
+  align-items: center;
+}
+
+.clientName {
+  margin-right: 4rem;
+  font-weight: bold;
+}
+.clientLocation {
+  margin-right: 3rem;
+  font-weight: bold;
+}
+
+.startDate, .dueDate {
+  margin-right: 3rem;
+  font-weight: bold; 
+}
+
+.totalBooks {
+  margin-right: 6.5rem;
+  font-weight: bold; 
+}
+
+.header {
+  background-color: #3a3736;
+  display: flex;
+  color: white;
+  justify-content: space-between;
+}
+
+.companydetails {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.headerText {
+  justify-items: flex-end;
+  font-weight: 600;
+  margin-top: 10px;
+  font-size: 20px;
+  padding: 10px;
+}
+
+.down {
+  width: 100%; 
+  height: 10px; 
+  background-color: lightblue; 
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+
+@media print {
+  .tableContainer {
+    border-collapse: collapse;
+  }
+
+  .tableContainer th,
+  .tableContainer td {
+    border: 0px solid black;
+  }
+
+  .header {
+    background-color: #3a3736 !important; 
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+  
+  .down {
+    background-color: lightblue !important;
+    -webkit-print-color-adjust: exact; 
+    print-color-adjust: exact; 
+  }
+
+  .headerText {
+    color: white !important;
+  }
+
+  .button {
+    display: none !important; 
+  }
+}

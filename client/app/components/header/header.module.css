@@ -1,0 +1,24 @@
+.header {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo a {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profileName {
+  margin-left: 0.5rem;
+}
