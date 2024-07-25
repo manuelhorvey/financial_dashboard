@@ -1,0 +1,50 @@
+.accCard {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  width: 300px;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.accCard span {
+  font-size: 1rem;
+  font-weight: 200;
+  justify-content: space-between;
+}
+
+.accCard:hover {
+  transform: rotateY(20deg);
+}
+
+.accSummary {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.grp {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; 
+}
+
+.grp p {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-grow: 1;
+}
+
+.buttonColor {
+  width: 100%;
+  height: 4px;
+  margin-top: auto; 
+  background-color: inherit; 
+}

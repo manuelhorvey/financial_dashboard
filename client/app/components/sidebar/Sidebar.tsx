@@ -14,8 +14,8 @@ interface SidebarProps {
     totalExpenses: number;
     totalVendors: number;
     latestExpenseDate: string;
-    totalPreviousWeek?:number;
-    totalCurrentWeek?:number;
+    totalPreviousWeek:number;
+    totalCurrentWeek:number;
   };
   employeesSummary?: {
     totalEmployees: number;

@@ -43,8 +43,8 @@ const Expenses = () => {
       try {
         const [allExpenses, previousWeekExpenses, currentWeekExpenses] = await Promise.all([
           fetchExpenses('http://localhost:3000/expenses/'),
-          fetchExpenses('http://localhost:3000/expenses/current/current-week'),
           fetchExpenses('http://localhost:3000/expenses/recent/previous-week'),
+          fetchExpenses('http://localhost:3000/expenses/current/current-week'),
         ]);
 
         setExpenses(allExpenses);

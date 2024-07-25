@@ -1,0 +1,29 @@
+.accSummary{
+  justify-content: center;
+  display: flex;
+  gap: 20px;
+}
+
+.graphs{
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.pL{
+  flex: 1.5;
+}
+
+.card{
+  display: flex;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.Income{
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}

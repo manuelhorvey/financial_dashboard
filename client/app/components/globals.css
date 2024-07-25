@@ -1,30 +1,30 @@
 :root {
   /* Primary Colors */
-  --color-primary: #6371b0;      
-  --color-primary-dark: #4c5a95; 
-  --color-primary-light: #7982c1;
+  --color-primary: #005f73;      /* Deep Teal */
+  --color-primary-dark: #003d34; /* Darker Teal */
+  --color-primary-light: #00a6a6;/* Lighter Teal */
 
   /* Secondary Colors */
-  --color-secondary: #a4aed8;    
-  --color-secondary-dark: #7f8dbf; 
-  --color-secondary-light: #c1cae3; 
+  --color-secondary: #94d2bd;    /* Soft Green */
+  --color-secondary-dark: #62b47a; /* Darker Green */
+  --color-secondary-light: #c4e5e1; /* Lighter Green */
 
   /* Text and Background Colors */
-  --color-text: #0e0f14;           
-  --color-background: #f3eded;   
+  --color-text: #003333;         /* Dark Teal */
+  --color-background: #e6f0f1;   /* Very Light Teal */
 
   /* Accent Colors */
-  --color-accent: #6e80ca;       
-  --color-accent-dark: #5765b2;  
-  --color-accent-light: #8497d6; 
+  --color-accent: #ee9b00;       /* Warm Yellow */
+  --color-accent-dark: #e07a5f;  /* Warm Orange */
+  --color-accent-light: #f8f1e5; /* Light Beige */
 
   /* Additional Colors */
-  --color-gray: #757575;         
-  --color-border: #e0e0e0;       
+  --color-gray: #6c757d;         /* Cool Gray */
+  --color-border: #dee2e6;       /* Light Gray */
 
   /* Success and Error Colors */
-  --color-success: #4caf50;      
-  --color-error: #f44336;        
+  --color-success: #28a745;      /* Success Green */
+  --color-error: #dc3545;        /* Error Red */
 }
 
 *{
