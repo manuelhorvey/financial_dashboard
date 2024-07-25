@@ -83,9 +83,8 @@ const singleStatement = () => {
     setStatement({ ...statement, [field]: value });
   };
   const formatDate = (dateString: string): string => {
-    // Check if dateString is empty or not a valid date
     if (!dateString || isNaN(Date.parse(dateString))) {
-      return ''; // or handle default case as needed
+      return ''; 
     }
 
     const date = new Date(dateString);
@@ -125,32 +124,44 @@ const singleStatement = () => {
 
   useEffect(() => {
     const balanceOfficeValue = parseFloat(balanceOffice);
-    let balanceClientValue: number = 0;
-    let balanceValue: number = 0;
+    let balanceClientValue = 0;
+    
+    const cashOfficeValue = statement.cashOffice || 0;
+    const prevbalOfficeValue = statement.prevbalOffice || 0;
+    const cashClientValue = statement.cashClient|| 0;
+    const prevbalClientValue = statement.prevbalClient || 0;
+    setBalance(balanceOfficeValue);
+    let calculatedFinalBalance = balanceOfficeValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
+    let calculatedFinalBalanceClient = balanceClientValue + prevbalClientValue - balanceOfficeValue - cashOfficeValue - prevbalOfficeValue;
+
+    if (calculatedFinalBalance < 0) calculatedFinalBalance = 0;
+          if (calculatedFinalBalanceClient < 0) calculatedFinalBalanceClient = 0;
 
     if (balanceOfficeValue < 0) {
       balanceClientValue = -balanceOfficeValue;
+      setBalanceClient(balanceClientValue);
+      setBalance(0);
+      setFinalbalanceOffice(0);
     } else {
-      balanceValue = balanceOfficeValue;
+      if (calculatedFinalBalanceClient < 0) {
+        calculatedFinalBalance = -calculatedFinalBalanceClient;
+        calculatedFinalBalance = balanceOfficeValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
+        setBalanceClient(0)
+        setFinalbalanceOffice(calculatedFinalBalance < 0 ? 0 : calculatedFinalBalance);
+      } else {
+        setFinalbalanceOffice(calculatedFinalBalance < 0 ? 0 : calculatedFinalBalance);
+      }
     }
 
-    // Initial calculation for final balance
-    let calculatedFinalBalance: number = balanceValue + statement.prevbalOffice + cashOfficeValue - statement.prevbalClient - cashClientValue - balanceClientValue;
-    if (calculatedFinalBalance < 0) {
-      calculatedFinalBalance = 0;
-    }
-
-    // Calculate final balance for the client
-    let calculatedFinalBalanceClient = balanceClientValue + statement.prevbalClient - cashOfficeValue - statement.prevbalOffice;
-    if (balanceClientValue < 0 || balanceClientValue === 0) {
-      calculatedFinalBalanceClient = 0;
-    }
-
-    setBalance(balanceValue);
+    setBalance(balanceOfficeValue);
     setBalanceClient(balanceClientValue);
     setFinalbalanceOffice(calculatedFinalBalance);
     setFinalbalanceClient(calculatedFinalBalanceClient);
   }, [balanceOffice, statement.prevbalOffice, statement.prevbalClient, cashClientValue, cashOfficeValue]);
+
+  const formatNumber = (number: number) => {
+    return new Intl.NumberFormat().format(number);
+  };
 
   return (
     <div >
@@ -250,7 +261,7 @@ const singleStatement = () => {
               <TableRow>
                 <TableCell />
                 <TableCell>Balance</TableCell>
-                <TableCell align='right'>{balance}</TableCell>
+                <TableCell align='right'>{formatNumber(balance)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell />
@@ -282,12 +293,12 @@ const singleStatement = () => {
               <TableRow>
                 <TableCell />
                 <TableCell>Final Balance:Office</TableCell>
-                <TableCell align='right'>{finalbalanceOffice.toFixed(2)}</TableCell>
+                <TableCell align='right'>{formatNumber(finalbalanceOffice)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell />
                 <TableCell>Balance:Client</TableCell>
-                <TableCell align='right'>{balanceClient}</TableCell>
+                <TableCell align='right'>{formatNumber(balanceClient)}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell />
@@ -318,7 +329,7 @@ const singleStatement = () => {
               <TableRow>
                 <TableCell />
                 <TableCell>Final Balance:Client</TableCell>
-                <TableCell align='right'>{finalbalanceClient.toFixed(2)}</TableCell>
+                <TableCell align='right'>{formatNumber(finalbalanceClient)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

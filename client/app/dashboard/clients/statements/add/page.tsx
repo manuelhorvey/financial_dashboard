@@ -111,15 +111,16 @@ const AddStatement = () => {
   const totalNet = totalGross * (1 - grossCommission / 100);
   const balanceOffice = totalNet - wins;
 
+  
   useEffect(() => {
     let balanceValue = balanceOffice || 0;
     let balanceClientValue = 0;
-
+    
     const cashOfficeValue = cashOffice || 0;
     const prevbalOfficeValue = prevbalOffice || 0;
     const cashClientValue = cashClient || 0;
     const prevbalClientValue = prevbalClient || 0;
-
+    setBalance(balanceValue);
     let calculatedFinalBalance = balanceValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
     let calculatedFinalBalanceClient = balanceClientValue + prevbalClientValue - balanceValue - cashOfficeValue - prevbalOfficeValue;
 

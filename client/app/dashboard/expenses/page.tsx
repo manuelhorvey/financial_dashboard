@@ -136,7 +136,7 @@ const Expenses = () => {
                     <TableCell align='right'>{expense.vendor}</TableCell>
                     <TableCell align='right'>{new Date(expense.createdAt).toLocaleDateString()}</TableCell>
                     <TableCell align='right'>{expense.details}</TableCell>
-                    <TableCell align='right'>{expense.amount.toFixed(2)}</TableCell>
+                    <TableCell align='right'>{`${(expense.amount / 1_000_000).toFixed(2)}M`}</TableCell>
                     <TableCell align='right'>
                       <Button variant="outlined" color="secondary" size="small" onClick={() => handleEditButtonClick(expense._id)}>Edit</Button>
                       <Button 

@@ -11,13 +11,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@mui/material": "^5.16.4",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^5.16.5",
     "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-icons": "^5.2.1",
+    "react-imask": "^7.6.1",
+    "react-number-format": "^5.4.0",
     "react-toastify": "^10.0.5",
     "recharts": "^2.12.7"
   },

@@ -50,11 +50,11 @@ const Clients = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>; // Show a loading indicator while fetching data
+    return <p>Loading...</p>; 
   }
 
   if (error) {
-    return <p>Error: {error}</p>; // Show an error message if fetching fails
+    return <p>Error: {error}</p>; 
   }
 
   return (

@@ -15,6 +15,85 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.get('/current/current-week', async (req, res) => {
+  try {
+    // Calculate the start and end dates for the current week
+    const now = new Date();
+    const dayOfWeek = now.getDay(); // 0 for Sunday, 1 for Monday, etc.
+    
+    // Set to the start of the current week (Sunday)
+    const startOfCurrentWeek = new Date(now);
+    startOfCurrentWeek.setDate(now.getDate() - dayOfWeek);
+    startOfCurrentWeek.setHours(0, 0, 0, 0); // Start of the day
+    
+    // Set to the end of the current week (Saturday)
+    const endOfCurrentWeek = new Date(startOfCurrentWeek);
+    endOfCurrentWeek.setDate(startOfCurrentWeek.getDate() + 7);
+    endOfCurrentWeek.setHours(23, 59, 59, 999); // End of the day
+
+    // Fetch statements where the createdAt date is within the current week
+    const statements = await Statement.find({
+      createdAt: {
+        $gte: startOfCurrentWeek,
+        $lt: endOfCurrentWeek
+      }
+    }).sort({ createdAt: -1 }); // Optional: sort by createdAt in descending order
+
+    res.status(200).json(statements);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
+router.get('/current/current-year', async (req, res) => {
+  try {
+    const currentYear = new Date().getFullYear();
+    const statements = await Statement.aggregate([
+      {
+        $match: {
+          createdAt: {
+            $gte: new Date(`${currentYear}-01-01`),
+            $lt: new Date(`${currentYear + 1}-01-01`)
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: 'clients',
+          localField: 'clientId',
+          foreignField: '_id',
+          as: 'client'
+        }
+      },
+      {
+        $unwind: '$client'
+      },
+      {
+        $group: {
+          _id: {
+            month: { $month: "$createdAt" },
+            clientId: "$clientId",
+            clientName: { $first: "$client.clientName" } // Correctly capturing client name
+          },
+          grossCommission: { $max: "$client.grossCommission" },
+          totalGross: { $sum: { $sum: "$gross" } }, // Summing the gross array values
+          totalBooks: { $sum: { $sum: "$books" } }, // Summing the books array values
+          wins: { $sum: "$wins" },
+          prevbalOffice: { $sum: "$prevbalOffice" },
+          cashOffice: { $sum: "$cashOffice" },
+          prevbalClient: { $sum: "$prevbalClient" },
+          cashClient: { $sum: "$cashClient" }
+        }
+      }
+    ]);
+
+    res.status(200).json(statements);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 
 

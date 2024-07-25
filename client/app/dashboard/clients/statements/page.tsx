@@ -88,10 +88,6 @@ const Statements = () => {
     router.push(`/view/v?id=${_id}&&clientId=${clientId}&&C=${grossCommission}`);
   };
 
-  const handlePrintClick = (id: string) => {
-    console.log(`Print statement ${id}`);
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.header}>
