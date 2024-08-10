@@ -1,36 +1,94 @@
-'use client'
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+'use client';
+import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import styles from './clientIncomegraph.module.css';
 
-// Function to generate random data
-const generateRandomData = (numEntries: number) => {
-  const names = [
-    'Alpha', 'Bravo', 'Charlie', 'Delta', 
-    'Echo', 'Foxtrot', 'Golf', 'Hotel', 
-    'India', 'Juliet'
-  ];
-  
-  
-  const data = [];
-
-  for (let i = 0; i < numEntries; i++) {
-    data.push({
-      name: names[i % names.length],
-      income: Math.floor(Math.random() * 5000) + 1000,  // Random income between 1000 and 6000
-      loss: Math.floor(Math.random() * 3000) + 500     // Random loss between 500 and 3500
-    });
-  }
-
-  return data;
-};
-
-const data = generateRandomData(10);
+interface Statement {
+  _id: {
+    grossCommission: number;
+  };
+  clientId: string;
+  clientName: string;
+  gross: number[];
+  grossCommission: number;
+  totalGross: number;
+  totalBooks: number;
+  wins: number;
+  prevbalOffice: number;
+  cashOffice: number;
+  prevbalClient: number;
+  cashClient: number;
+}
 
 const IncomeChart: React.FC = () => {
+  const [data, setData] = useState<{ name: string, income: number, loss: number }[]>([]);
+
+  useEffect(() => {
+    const fetchStatements = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/statements/current/current-week');
+        const statementsData: Statement[] = await response.json();
+
+        if (statementsData.length > 0) {
+          // Group by client name
+          const agentData: { [key: string]: { income: number, loss: number } } = {};
+
+          statementsData.forEach(statement => {
+            const clientName = statement.clientName || "Unknown";
+
+            // Sum up the gross array
+            const totalGross = statement.gross.reduce((acc, grossAmount) => acc + grossAmount, 0);
+            
+            const grossCommissionRate = statement.grossCommission / 100;
+            const totalNet = totalGross * (1 - grossCommissionRate);
+            const balanceOffice = totalNet - statement.wins;
+          
+            const cashOfficeValue = statement.cashOffice || 0;
+            const prevbalOfficeValue = statement.prevbalOffice || 0;
+            const cashClientValue = statement.cashClient || 0;
+            const prevbalClientValue = statement.prevbalClient || 0;
+          
+            let balanceValue = balanceOffice || 0;
+            let balanceClientValue = 0;
+          
+            let calculatedFinalBalance = balanceValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
+            let calculatedFinalBalanceClient = balanceClientValue + prevbalClientValue - balanceValue - cashOfficeValue - prevbalOfficeValue;
+          
+            // Set any value less than 0 to zero
+            if (calculatedFinalBalance < 0) calculatedFinalBalance = 0;
+            if (calculatedFinalBalanceClient < 0) calculatedFinalBalanceClient = 0;
+          
+            if (!agentData[clientName]) {
+              agentData[clientName] = { income: 0, loss: 0 };
+            }
+          
+            // Correctly sum income and loss
+            agentData[clientName].income += parseFloat((calculatedFinalBalance / 1_000_000).toFixed(2)) || 0;
+            agentData[clientName].loss += parseFloat((Math.abs(calculatedFinalBalanceClient) / 1_000_000).toFixed(2)) || 0;
+          });
+
+          // Convert agent data to array
+          const formattedData = Object.keys(agentData).map(clientName => ({
+            name: clientName,
+            income: agentData[clientName].income,
+            loss: agentData[clientName].loss
+          }));
+          
+          setData(formattedData);
+        } else {
+          setData([]);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchStatements();
+  }, []);
+
   return (
     <div className={styles.container}>
-      <h3 className={styles.title}>Income from Clients</h3>
+      <h3 className={styles.title}>Income and Loss by Agent (Current Week)</h3>
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
           data={data}
@@ -41,13 +99,12 @@ const IncomeChart: React.FC = () => {
             bottom: 5,
           }}
         >
-          {/* <CartesianGrid strokeDasharray="3 3" /> */}
           <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
+          <YAxis tickFormatter={(value) => `${value} M`} />
+          <Tooltip formatter={(value: number) => `${value} M`} />
           <Legend />
-          <Bar type="monotone" dataKey="income" fill="#27ae60" />
-          <Bar type="monotone" dataKey="loss" fill="#c0392b" />
+          <Bar dataKey="income" fill="#27ae60" />
+          <Bar dataKey="loss" fill="#c0392b" />
         </BarChart>
       </ResponsiveContainer>
     </div>

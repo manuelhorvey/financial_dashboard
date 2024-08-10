@@ -117,7 +117,7 @@ const ViewStatement = () => {
           {<div className={styles.header}>
             <div className={styles.companydetails}>
             <h3>DAN SAVIOUR ENTERPRISE</h3>
-            <span> 4822, CO C1 TEMA</span>
+            <span>P.O BOX 4822, CO C1 TEMA</span>
             <span>KUMASI ROAD OPP ROYALTY CHURCH</span>
             </div>
             <h2 className={styles.headerText}>APPROVED STATEMENT OF ACCOUNT</h2>

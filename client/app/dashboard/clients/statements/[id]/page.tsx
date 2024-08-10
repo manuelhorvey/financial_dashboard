@@ -119,45 +119,48 @@ const singleStatement = () => {
   const totalNet = totalGross * (1 - ((grossCommission) / 100));
   const balanceOffice = (totalNet - statement.wins).toFixed(2);
 
-  let cashOfficeValue = statement.cashOffice;
-  let cashClientValue = statement.cashClient;
+  // let cashOfficeValue = statement.cashOffice;
+  // let cashClientValue = statement.cashClient;
 
   useEffect(() => {
-    const balanceOfficeValue = parseFloat(balanceOffice);
+    let balanceOfficeValue = parseFloat(balanceOffice);
     let balanceClientValue = 0;
-    
+
     const cashOfficeValue = statement.cashOffice || 0;
     const prevbalOfficeValue = statement.prevbalOffice || 0;
-    const cashClientValue = statement.cashClient|| 0;
+    const cashClientValue = statement.cashClient || 0;
     const prevbalClientValue = statement.prevbalClient || 0;
-    setBalance(balanceOfficeValue);
+
+    // Calculate final balances
     let calculatedFinalBalance = balanceOfficeValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
     let calculatedFinalBalanceClient = balanceClientValue + prevbalClientValue - balanceOfficeValue - cashOfficeValue - prevbalOfficeValue;
 
+    // Set to 0 if negative
     if (calculatedFinalBalance < 0) calculatedFinalBalance = 0;
-          if (calculatedFinalBalanceClient < 0) calculatedFinalBalanceClient = 0;
+    if (calculatedFinalBalanceClient < 0) calculatedFinalBalanceClient = 0;
 
     if (balanceOfficeValue < 0) {
-      balanceClientValue = -balanceOfficeValue;
-      setBalanceClient(balanceClientValue);
-      setBalance(0);
-      setFinalbalanceOffice(0);
+        // Assign value to balanceClient before setting balanceOffice to 0
+        balanceClientValue = -balanceOfficeValue;
+        setBalanceClient(balanceClientValue);
+        setBalance(0);
+        setFinalbalanceOffice(0);
     } else {
-      if (calculatedFinalBalanceClient < 0) {
-        calculatedFinalBalance = -calculatedFinalBalanceClient;
-        calculatedFinalBalance = balanceOfficeValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
-        setBalanceClient(0)
+        if (calculatedFinalBalanceClient < 0) {
+            calculatedFinalBalance = -calculatedFinalBalanceClient;
+            setBalanceClient(0);
+        } else {
+            setBalanceClient(0);
+        }
         setFinalbalanceOffice(calculatedFinalBalance < 0 ? 0 : calculatedFinalBalance);
-      } else {
-        setFinalbalanceOffice(calculatedFinalBalance < 0 ? 0 : calculatedFinalBalance);
-      }
     }
 
-    setBalance(balanceOfficeValue);
-    setBalanceClient(balanceClientValue);
+    // Ensure correct final balance values are set
+    setBalance(balanceOfficeValue < 0 ? 0 : balanceOfficeValue);
     setFinalbalanceOffice(calculatedFinalBalance);
     setFinalbalanceClient(calculatedFinalBalanceClient);
-  }, [balanceOffice, statement.prevbalOffice, statement.prevbalClient, cashClientValue, cashOfficeValue]);
+
+}, [balanceOffice, statement.prevbalOffice, statement.prevbalClient, statement.cashClient, statement.cashOffice]);
 
   const formatNumber = (number: number) => {
     return new Intl.NumberFormat().format(number);

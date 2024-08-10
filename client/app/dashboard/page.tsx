@@ -92,9 +92,10 @@ const Dashboard: React.FC = () => {
     const totalCashOffice = statements.reduce((acc, curr) => acc + curr.cashOffice, 0);
     const prevbalOffice = statements.reduce((acc, curr) => acc + curr.prevbalOffice, 0);
     const prevbalClient = statements.reduce((acc, curr) => acc + curr.prevbalClient, 0);
+    const totalCashClient = statements.reduce((acc, curr) => acc + curr.cashClient, 0);
     const wins = statements.reduce((acc, curr) => acc + curr.wins, 0);
 
-    const netProfitCalc = totalRevenueCalc + prevbalOffice -wins -totalCashOffice -prevbalClient - totalExpensesCalc;
+    const netProfitCalc = totalRevenueCalc + prevbalOffice +totalCashOffice -wins  -prevbalClient - totalExpensesCalc -totalCashClient;
     setNetProfit(netProfitCalc);
   }, [calculatedStatements, expenses]);
 

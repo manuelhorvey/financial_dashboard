@@ -26,6 +26,7 @@ const PLGraph: React.FC = () => {
     const fetchStatements = async () => {
       try {
         const response = await fetch('http://localhost:3000/statements/current/current-year');
+        if (!response.ok) throw new Error('Network response was not ok');
         const statementsData: Statement[] = await response.json();
 
         const monthlyData = Array.from({ length: 12 }, (_, index) => ({
@@ -38,32 +39,31 @@ const PLGraph: React.FC = () => {
           const monthIndex = statement._id.month - 1;
           const grossCommissionRate = statement.grossCommission / 100;
           const totalNet = statement.totalGross * (1 - grossCommissionRate);
-          const balanceOffice = totalNet - statement.wins;
+          const balanceOfficeValue = totalNet - statement.wins;
 
           const cashOfficeValue = statement.cashOffice || 0;
           const prevbalOfficeValue = statement.prevbalOffice || 0;
           const cashClientValue = statement.cashClient || 0;
           const prevbalClientValue = statement.prevbalClient || 0;
 
-          let balanceValue = balanceOffice || 0;
+          let balanceValue = balanceOfficeValue || 0;
           let balanceClientValue = 0;
 
           let calculatedFinalBalance = balanceValue + prevbalOfficeValue + cashOfficeValue - prevbalClientValue - cashClientValue;
           let calculatedFinalBalanceClient = balanceClientValue + prevbalClientValue - balanceValue - cashOfficeValue - prevbalOfficeValue;
 
-          // Set any value less than 0 to zero
-          if (calculatedFinalBalance < 0) calculatedFinalBalance = 0;
-          if (calculatedFinalBalanceClient < 0) calculatedFinalBalanceClient = 0;
-
-          console.log(`Client ID: ${statement._id.clientId}, Client Name: ${statement._id.clientName}`);
-          console.log(`calculatedFinalBalance: ${calculatedFinalBalance}`);
-          console.log(`calculatedFinalBalanceClient: ${calculatedFinalBalanceClient}`);
-
+          // Ensure both profit and loss are tracked separately
           if (calculatedFinalBalance > 0) {
             monthlyData[monthIndex].profit += calculatedFinalBalance;
-          } else {
-            monthlyData[monthIndex].loss += Math.abs(calculatedFinalBalanceClient);
           }
+          if (calculatedFinalBalanceClient > 0) {
+            monthlyData[monthIndex].loss += calculatedFinalBalanceClient;
+          }
+
+          // Print each month's profit and loss to the console
+          console.log(`Month: ${monthlyData[monthIndex].name}`);
+          console.log(`Profit: ${monthlyData[monthIndex].profit.toFixed(2)} M`);
+          console.log(`Loss: ${monthlyData[monthIndex].loss.toFixed(2)} M`);
         });
 
         // Format data: divide by 1,000,000 and round to 2 decimal places
@@ -88,19 +88,15 @@ const PLGraph: React.FC = () => {
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
           data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
+          margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
         >
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="name" />
           <YAxis tickFormatter={(value) => `${value} M`} />
           <Tooltip formatter={(value) => `${value} M`} />
           <Legend />
-          <Line type="monotone" dataKey="profit" stroke="#27ae60" fill="#82ca9d" />
-          <Line type="monotone" dataKey="loss" stroke="#C70039" fill="#ff4d4f" />
+          <Line type="monotone" dataKey="profit" stroke="#27ae60" fill="#82ca9d" strokeWidth={2} />
+          <Line type="monotone" dataKey="loss" stroke="#C70039" fill="#ff4d4f" strokeWidth={2} />
         </LineChart>
       </ResponsiveContainer>
     </div>
